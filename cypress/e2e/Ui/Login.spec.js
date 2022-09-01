@@ -1,12 +1,10 @@
 /// <reference types="cypress" />
+import usuarios from '../../fixtures/usuarios.json';
 
 describe('US0001 - Funcionalidade: Login', () => {
     
-    beforeEach(() => {
-        cy.visit('login')
-    });
 
-    it('deve fazer login com sucesso', () => {
+    it('Deve fazer login com sucesso', () => {
         cy.login('wilson@bootcampvia.email', '123456')
         cy.get('[data-test="dashboard-welcome"]').should('contain', 'Bem-vindo')
     });
@@ -16,6 +14,17 @@ describe('US0001 - Funcionalidade: Login', () => {
         cy.get('[data-test="alert"]').should('exist').should('contain', 'Credenciais inválidas')
     });
 
+    it('Deve fazer login com sucesso - Usando importação', () => {
+        cy.login(usuarios[0].email, usuarios[0].senha)
+        cy.get('[data-test="dashboard-welcome"]').should('contain', 'Bem-vindo')
+    });
+
+    it('Deve fazer login com sucesso - Usando fixture', () => {
+        cy.fixture("usuarios").then((user) => {
+            cy.login(user[0].email, user[0].senha)
+        })
+        cy.get('[data-test="dashboard-welcome"]').should('contain', 'Bem-vindo')
+    });
 });
 
 /* 

@@ -1,0 +1,15 @@
+[
+    {
+        "email": "wilson@bootcampvia.email",
+        "senha": "123456"
+    },
+    {
+        "email": "wilson_a@bootcampvia.email",
+        "senha": "123456"
+    },
+    {
+        "email": "wilson_b@bootcampvia.email",
+        "senha": "123456",
+        "perfil": "admin"
+    }
+]
