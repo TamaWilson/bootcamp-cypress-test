@@ -26,6 +26,7 @@
 
 /// <reference types="Cypress" />
 const faker = require('faker-br');
+import auth from '../fixtures/auth.json'
 
 Cypress.Commands.add('navigate', (route) => {
     cy.intercept(route).as('loadpage')
@@ -65,5 +66,27 @@ Cypress.Commands.add("selectStatus", () => {
     cy.get('[data-test="profile-socials"]').click()
     cy.get('[class="my-1 social-input"]').each(input => { 
         cy.get(input).type(faker.internet.url())
+    })
+ })
+
+ Cypress.Commands.add("tokenJwt", () => {
+    cy.request({
+        method: 'POST',
+        url: '/api/auth',
+        body: auth
+    })
+    .then((response) => {
+        return response.body.jwt
+    })
+ })
+
+ Cypress.Commands.add("criarPosts", (token, text) => {
+    cy.request({
+        method: 'POST',
+        url: '/api/posts',
+        headers: {
+            Cookies: token
+        },
+        body: { text }
     })
  })
